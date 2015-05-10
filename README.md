@@ -5,6 +5,8 @@ https://iada.nl/en/blog/article/temperature-monitoring-raspberry-pi
 
 
 Using: 
-http://www.tornadoweb.org/en/stable/
-https://developers.google.com/chart/
+
+Tornado (REST): http://www.tornadoweb.org/en/stable/
+
+Google Charts: https://developers.google.com/chart/
 
