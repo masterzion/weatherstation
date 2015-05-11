@@ -7,7 +7,7 @@ import json
 root = os.path.dirname(__file__)
 port = 8888
 
-conn = sqlite3.connect('/root/smarthome.db')
+conn = sqlite3.connect('/root/weatherstation/smarthome.db')
 
 class TempLast(tornado.web.RequestHandler):
     def get(self):
@@ -19,7 +19,13 @@ class TempLast(tornado.web.RequestHandler):
 class TempDay(tornado.web.RequestHandler):
     def get(self):
       c = conn.cursor()
-      c.execute("select  substr(datetime,12,4) || '0' as date,  round(avg(value), 2) as temp1 from sensors group by substr(datetime,1,15) || '0' limit 144  ")
+      sql =  "select "
+      sql += "substr(datetime,12,4) || '0' as date, "
+      sql += "round(avg(value), 2) as temp1 "
+      sql += "from sensors "
+      sql += "where id in ( select id from sensors order by id desc limit 1440 ) "
+      sql += "group by substr(datetime,1,15) || '0' "
+      c.execute(sql)
       data=c.fetchall()
       self.write(json.dumps(data))
 
