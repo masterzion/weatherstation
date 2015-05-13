@@ -6,53 +6,6 @@
         <script src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
         <script type="text/javascript" src="https://www.google.com/jsapi"></script>
         <script type="text/javascript" src="js/common.js"></script>
-        <script type="text/javascript">
-            google.load('visualization', '1', {packages: ['corechart', 'line']});
-            google.setOnLoadCallback(drawCurveTypes);
-
-            function loadJSON(url) {
-                var request = new XMLHttpRequest();
-
-              // load it
-              // the last "false" parameter ensures that our code will wait before the
-              // data is loaded
-              request.open('GET', url, false);
-              request.send();
-
-              // parse adn return the output
-              return JSON.parse(request.responseText);
-            };
-
-
-        function drawCurveTypes() {
-              var data = new google.visualization.DataTable();
-              data.addColumn('string', 'Hour');
-              data.addColumn('number', 'Temp1');
-        //      data.addColumn('number', 'Temp2');
-
-              data.addRows(loadJSON('/day/'));
-
-              var options = {
-                backgroundColor: { fill:'transparent' },
-                curveType: 'function',
-                hAxis: {
-                  title: 'Hour'
-                },
-                vAxis: {
-                  title: 'Temperature'
-                },
-                series: {
-                  1: {curveType: 'function'}
-                }
-              };
-
-              var chart = new google.visualization.LineChart(document.getElementById('chartdiv'));
-              chart.draw(data, options);
-            }
-           </script>
-
-
-
     </head>
     <body>
         <div class="content">
