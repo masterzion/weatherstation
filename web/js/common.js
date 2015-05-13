@@ -1,3 +1,4 @@
+// -----------  get data result  ----------- 
 function getLastTempResult() {
   $.getJSON('/last/', function( data ) {
     if (typeof data != 'undefined') {
@@ -24,16 +25,15 @@ function drawCurveTypes() {
 
         var options = {
           backgroundColor: { fill:'transparent' },
+          colors: ['#55f'],
+
           curveType: 'function',
           hAxis: {
-            title: 'Hour'
+            title: 'Hour',
           },
           vAxis: {
-            title: 'Temperature'
+            title: 'Temperature',
           },
-          series: {
-            1: {curveType: 'function'}
-          }
         };
 
         var chart = new google.visualization.LineChart(document.getElementById('chartdiv'));
