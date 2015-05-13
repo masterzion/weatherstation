@@ -19,7 +19,7 @@ function drawCurveTypes() {
         var data = new google.visualization.DataTable();
         data.addColumn('string', 'Hour');
         data.addColumn('number', 'External');
-      //      data.addColumn('number', 'Temp2');
+        //data.addColumn('number', 'Internal');
 
         data.addRows( jsondata );
 
