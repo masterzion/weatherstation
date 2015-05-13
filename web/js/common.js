@@ -18,7 +18,7 @@ function drawCurveTypes() {
     if (typeof jsondata != 'undefined') {
         var data = new google.visualization.DataTable();
         data.addColumn('string', 'Hour');
-        data.addColumn('number', 'Temp1');
+        data.addColumn('number', 'External');
       //      data.addColumn('number', 'Temp2');
 
         data.addRows( jsondata );
