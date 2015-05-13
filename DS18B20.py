@@ -13,7 +13,7 @@ device_file = device_folder + '/w1_slave'
 
 conn = sqlite3.connect('/root/weatherstation/smarthome.db')
 c = conn.cursor()
-c.execute('''CREATE TABLE IF NOT EXISTS sensors (id INTEGER PRIMARY KEY AUTOINCREMENT, sensor int, value real, datetime string )''')
+c.execute('CREATE TABLE IF NOT EXISTS sensors (id INTEGER PRIMARY KEY AUTOINCREMENT, sensor int, value real, datetime string )')
 
  
 def read_temp_raw():
