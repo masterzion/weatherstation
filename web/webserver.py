@@ -1,7 +1,12 @@
-import os
+import os,sys,inspect
 import tornado.ioloop
 import tornado.web
 import json
+
+# import from parent directory
+currentdir = os.path.dirname(os.path.abspath(inspect.getfile(inspect.currentframe())))
+parentdir = os.path.dirname(currentdir)
+sys.path.insert(0,parentdir) 
 from models import Sensors
 
 root = os.path.dirname(__file__)
