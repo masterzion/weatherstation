@@ -5,7 +5,7 @@ import json
 from models import Sensors
 
 root = os.path.dirname(__file__)
-port = 8800
+port = 8888
 
 class TempLast(tornado.web.RequestHandler):
     def get(self):
