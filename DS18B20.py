@@ -1,8 +1,9 @@
 import os
 import glob
 import time
-import sqlite3
+
 from time import gmtime, strftime
+from models import Sensors
  
 os.system('modprobe w1-gpio')
 os.system('modprobe w1-therm')
@@ -10,11 +11,6 @@ os.system('modprobe w1-therm')
 base_dir = '/sys/bus/w1/devices/'
 device_folder = glob.glob(base_dir + '28*')[0]
 device_file = device_folder + '/w1_slave'
-
-conn = sqlite3.connect('/root/weatherstation/smarthome.db')
-c = conn.cursor()
-c.execute('CREATE TABLE IF NOT EXISTS sensors (id INTEGER PRIMARY KEY AUTOINCREMENT, sensor int, value real, datetime string )')
-
  
 def read_temp_raw():
     f = open(device_file, 'r')
@@ -35,8 +31,7 @@ def read_temp():
         return temp_c
 	
 while True:
-    sensor_value=read_temp()
+    sensor1_value=read_temp()
     datetime=strftime("%d-%m-%Y %H:%M", time.localtime())
-    c.execute("INSERT INTO sensors (sensor, value, datetime)  VALUES (4,"+str(sensor_value)+",'"+datetime+"')")
-    conn.commit()
+    Sensors().InsertData(sensor1_value, datetime)
     time.sleep(60)

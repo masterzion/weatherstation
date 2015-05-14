@@ -1,32 +1,20 @@
 import os
 import tornado.ioloop
 import tornado.web
-import sqlite3
 import json
+from models import Sensors
 
 root = os.path.dirname(__file__)
-port = 8888
-
-conn = sqlite3.connect('/root/weatherstation/smarthome.db')
+port = 8800
 
 class TempLast(tornado.web.RequestHandler):
     def get(self):
-        c = conn.cursor()
-        c.execute('SELECT * FROM sensors ORDER BY id DESC LIMIT 1')
-        data=c.fetchone()
-        self.write(str("%.2f" % round(data[2],2) ))
+        data = Sensors().getLast();
+        self.write(str(data[0]))
 
 class TempDay(tornado.web.RequestHandler):
     def get(self):
-      c = conn.cursor()
-      sql =  "select "
-      sql += "substr(datetime,12,4) || '0' as date, "
-      sql += "round(avg(value), 2) as temp1 "
-      sql += "from sensors "
-      sql += "where id in ( select id from sensors order by id desc limit 1440 ) "
-      sql += "group by substr(datetime,1,15) || '0' "
-      c.execute(sql)
-      data=c.fetchall()
+      data = Sensors().getDay()
       self.write(json.dumps(data))
 
 application = tornado.web.Application([
