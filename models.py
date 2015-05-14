@@ -12,7 +12,7 @@ class Sensors():
     def getDay(self):
       sql =  "select "
       sql += "substr(datetime,12,4) || '0' as date, "
-      sql += "round(avg(sensor1), 2) as temp1 "
+      sql += "round(avg(sensor1), 2) as sensor1 "
       sql += "from sensors "
       sql += "where id in ( select id from sensors order by id desc limit 1440 ) "
       sql += "group by substr(datetime,1,15) || '0' "
