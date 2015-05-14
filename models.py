@@ -1,6 +1,9 @@
 import sqlite3
+import os
 
-conn = sqlite3.connect('/root/weatherstation/smarthome.db')
+root = os.path.dirname(__file__)
+conn = sqlite3.connect(root + '/smarthome.db')
+
 c = conn.cursor()
 c.execute('CREATE TABLE IF NOT EXISTS sensors (id INTEGER PRIMARY KEY AUTOINCREMENT, sensor1 real, datetime string )')
 

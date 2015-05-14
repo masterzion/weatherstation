@@ -4,14 +4,15 @@ import tornado.web
 import json
 
 # import from parent directory
+root = os.path.dirname(__file__)
+os.chdir(root)
 currentdir = os.path.dirname(os.path.abspath(inspect.getfile(inspect.currentframe())))
 parentdir = os.path.dirname(currentdir)
 sys.path.insert(0,parentdir) 
 from models import Sensors
 
-root = os.path.dirname(__file__)
-port = 8888
 
+port = 8888
 class TempLast(tornado.web.RequestHandler):
     def get(self):
         data = Sensors().getLast();
