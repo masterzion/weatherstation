@@ -14,6 +14,13 @@ git clone https://github.com/masterzion/weatherstation.git
 cd weatherstation
 ``` 
 
+add this line in  /boot/config.txt
+``` ini
+dtoverlay=w1-gpio
+```
+
+
+
 add the crontabfile content in your crontab and reboot
 
 
