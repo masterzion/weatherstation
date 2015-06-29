@@ -2,9 +2,19 @@
 function getLastTempResult() {
   $.getJSON('/last/', function( data ) {
     if (typeof data != 'undefined') {
-        ar=data.toString().split(".");
+        ar=data[0].toString().split(".");
         $("#currenttemp").html(  ar[0]  );
         $("#currenttemp_decimal").html(  ar[1]  );
+
+        ar=data[1].toString().split(".");
+        $("#currenttemp_int").html(  ar[0]  );
+        $("#currenttemp_int_decimal").html(  ar[1]  );
+
+        ar=data[2].toString().split(".");
+        $("#humidity_int").html(  ar[0]  );
+        $("#humidity_int_decimal").html(  ar[1]  );
+
+
     }
   });
 }
@@ -19,13 +29,13 @@ function drawCurveTypes() {
         var data = new google.visualization.DataTable();
         data.addColumn('string', 'Hour');
         data.addColumn('number', 'External');
-        //data.addColumn('number', 'Internal');
+        data.addColumn('number', 'Internal');
 
         data.addRows( jsondata );
 
         var options = {
           backgroundColor: { fill:'transparent' },
-          colors: ['#55f'],
+          colors: ['#55f', '#5f5'],
 
           curveType: 'function',
           hAxis: {

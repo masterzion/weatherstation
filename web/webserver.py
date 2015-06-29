@@ -16,7 +16,8 @@ port = 8888
 class TempLast(tornado.web.RequestHandler):
     def get(self):
         data = Sensors().getLast();
-        self.write(str(data[0]))
+#        self.write(str(data[0]), str(data[1]), str(data[2]) )
+        self.write(json.dumps(data))
 
 class TempDay(tornado.web.RequestHandler):
     def get(self):

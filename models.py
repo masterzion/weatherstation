@@ -5,25 +5,26 @@ root = os.path.dirname(__file__)
 conn = sqlite3.connect(root + '/smarthome.db')
 
 c = conn.cursor()
-c.execute('CREATE TABLE IF NOT EXISTS sensors (id INTEGER PRIMARY KEY AUTOINCREMENT, sensor1 real, datetime string )')
+c.execute('CREATE TABLE IF NOT EXISTS sensors (id INTEGER PRIMARY KEY AUTOINCREMENT, sensor1 real, sensor2_value_t real, sensor2_value_h real, datetime string )')
 
 class Sensors():
     def getLast(self):
-        c.execute('SELECT round(sensor1, 2) FROM sensors ORDER BY id DESC LIMIT 1')
+        c.execute('SELECT round(sensor1, 2), round(sensor2_value_t, 2), round(sensor2_value_h, 2)  FROM sensors ORDER BY id DESC LIMIT 1')
         return c.fetchone()
 
     def getDay(self):
       sql =  "select "
       sql += "substr(datetime,12,4) || '0' as date, "
-      sql += "round(avg(sensor1), 2) as sensor1 "
+      sql += "round(avg(sensor1), 2) as sensor1, "
+      sql += "round(avg(sensor2_value_t), 2) as sensor2_value_t "
       sql += "from sensors "
       sql += "where id in ( select id from sensors order by id desc limit 1440 ) "
       sql += "group by substr(datetime,1,15) || '0' "
       c.execute(sql)
       return c.fetchall()
 
-    def InsertData(self, sensor1, datetime):
-        c.execute("INSERT INTO sensors (sensor1, datetime)  VALUES ("+str(sensor1)+",'"+datetime+"')")
+    def InsertData(self, sensor1, sensor2_value_t, sensor2_value_h, datetime):
+        c.execute("INSERT INTO sensors (sensor1, sensor2_value_t, sensor2_value_h, datetime)  VALUES ("+str(sensor1)+","+str(sensor2_value_t)+","+str(sensor2_value_h)+",'"+datetime+"')")
         conn.commit()
 
 '''
