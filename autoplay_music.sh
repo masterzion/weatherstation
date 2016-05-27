@@ -3,7 +3,7 @@
 # require:  mpc
 # apt-get install mpc
 
-
+source ~/.bashrc
 
 # saver to add in .bashrc ;)
 # MOBILE_IP=""
