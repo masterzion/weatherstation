@@ -16,7 +16,7 @@ echo "Server:"
 echo $SERVER_NAME
 
 function get_state() {
-    COUNT=$(ping "$MOBILE_IP" -c 3 | grep "ttl=" | wc -l)
+    COUNT=$(ping "$MOBILE_IP" -c 10 | grep "ttl=" | wc -l)
 
     if [ "$COUNT" == "0" ]; then
         echo 0
@@ -35,22 +35,22 @@ do
     STATE=$(get_state)
 
     if [ "$LASTSTATE" == "$STATE" ]; then
-        # if found state wasn't changed, wait 3 seconds.
+        echo "if found state wasn't changed, wait 3 seconds."
         sleep 3
     else
         # if found state was changed
         if [ "$STATE" == "0" ]; then
-           # it the state result was not found, pause the music
+           echo "it the state result was not found, pause the music"
            SEND_COMMAND="pause"
         else
-           # else means the state result was found, play the music
-           SEND_COMMAND="toggle" #play
+           echo "else means the state result was found, play the music"
+           SEND_COMMAND="play" #play
         fi
 
-        #send command to the server
+        echo "send command to the server"
         mpc -h "$SERVER_NAME" -p "$SERVER_PORT" "$SEND_COMMAND"
 
-        # save last state
+        echo "save last state = $STATE"
         LASTSTATE=$STATE
     fi
 done
