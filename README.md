@@ -6,7 +6,11 @@ https://iada.nl/en/blog/article/temperature-monitoring-raspberry-pi
 
 INSTALL
 ``` bash
-apt-get install python-setuptools git sqlite3
+apt-get install python-setuptools git sqlite3 python-smbus i2c-tools
+
+echo i2c-dev >> /etc/modules
+modprobe i2c-dev
+
 easy_install pip
 pip install tornado w1thermsensor
 

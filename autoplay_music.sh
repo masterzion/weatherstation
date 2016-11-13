@@ -8,7 +8,6 @@ source ~/.bashrc
 # saver to add in .bashrc ;)
 # MOBILE_IP=""
 # SERVER_NAME="password@ip" 
-SERVER_PORT="6600"
 
 echo "Mobile: "
 echo $MOBILE_IP
