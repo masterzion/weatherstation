@@ -12,7 +12,7 @@ echo i2c-dev >> /etc/modules
 modprobe i2c-dev
 
 easy_install pip
-pip install tornado w1thermsensor
+pip install tornado w1thermsensor pyping milight
 
 git clone https://github.com/masterzion/weatherstation.git
 cd weatherstation
@@ -23,6 +23,18 @@ add this line in  /boot/config.txt
 dtoverlay=w1-gpio
 ```
 
+
+Set the variables in .bashrc file
+
+``` bash
+MOBILE_IP="mobile_Ip"
+SERVER_NAME="pass@localhost" 
+SERVER_PORT="6600"
+
+MILIGHT_IP="milight_IP"
+MILIGHT_PORT="milight_port"
+MILIGHT_GROUP="1"
+```
 
 
 add the crontabfile content in your crontab and reboot
