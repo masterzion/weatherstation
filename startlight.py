@@ -40,27 +40,24 @@ def readLight(addr=DEVICE):
 print mobile_ip + " " +  milight_ip + " " + str(milight_port) + " " + str(milight_group)
 controller = milight.MiLight({'host': milight_ip, 'port': milight_port}, wait_duration=0)
 light = milight.LightBulb(['rgbw']) # Can specify which types of bulbs to use
-last_mobile_status = False
+
+last_mobile_status = True
 
 # main loop
 while True:
+    # check if the mobile is out of the network 3 times
     count=0
     while True:
-        if count > 3:
+        if count > 2:
             break
-
-        # check if the mobile is out of the network
         r = pyping.ping(mobile_ip)
-        if r.ret_code == 0:
-            mobile_status = True
+        mobile_status = (r.ret_code == 0)
+        print "Mobile:" + str(mobile_status)
+        if mobile_status:
             break
-            
         else:
             count += 1
-            mobile_status = False
             time.sleep(50)
-
-        print "Mobile:" + str(mobile_status)
 
 
     if mobile_status != last_mobile_status:
