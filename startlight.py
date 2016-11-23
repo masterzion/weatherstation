@@ -58,7 +58,7 @@ while True:
         else:
             count += 1
             mobile_status = False
-            time.sleep(5)
+            time.sleep(50)
 
         print "Mobile:" + str(mobile_status)
 
