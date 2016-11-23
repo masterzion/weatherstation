@@ -15,7 +15,7 @@ echo "Server:"
 echo $SERVER_NAME
 
 function get_state() {
-    COUNT=$(ping "$MOBILE_IP" -c 10 | grep "ttl=" | wc -l)
+    COUNT=$(ping "$MOBILE_IP" -c 5 -W 5 | grep "ttl=" | wc -l)
 
     if [ "$COUNT" == "0" ]; then
         echo 0
