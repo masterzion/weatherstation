@@ -61,16 +61,16 @@ while True:
     # check if the mobile is out of the network 3 times
     count=0
     while True:
-        if count > 2:
+        if count > 20:
             break
         r = pyping.ping(mobile_ip)
         mobile_status = (r.ret_code == 0)
-        print "Mobile:" + str(mobile_status)
+        print str(count) + " Mobile:" + str(mobile_status)
         if mobile_status:
             break
         else:
             count += 1
-            time.sleep(50)
+            time.sleep(5)
 
 
     if mobile_status != last_mobile_status:
@@ -79,15 +79,15 @@ while True:
             lumens = int(readLight())
             print "light sensor: " + str(lumens)
             if (lumens < 2) :
-                print "On"
+                print "set On"
                 time.sleep(4)
                 controller.send(light.fade_up(milight_group))
-                GPIO.output(23, GPIO.HIGH) #relay Off
                 light.wait(0)
                 last_mobile_status = mobile_status
         else:
           controller.send(light.fade_down(milight_group))
-          print "Off"
+          print "set Off"
+          GPIO.output(23, GPIO.HIGH) #relay Off
           last_mobile_status = mobile_status
 
     time.sleep(2)
