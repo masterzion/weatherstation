@@ -1,6 +1,19 @@
 #!/usr/bin/python
 
+
+try:
+    import RPi.GPIO as GPIO
+except RuntimeError:
+    print("Error importing RPi.GPIO!  This is probably because you need superuser privileges.  You can achieve this by using 'sudo' to run your script")
+
 import pyping, sys, milight, time, smbus
+
+
+#set relay config
+GPIO.setwarnings(False)
+GPIO.setmode(GPIO.BCM)
+GPIO.setup(23, GPIO.OUT)
+
 
 
 #if len(sys.argv) < 3:
@@ -62,11 +75,14 @@ while True:
 
     if mobile_status != last_mobile_status:
         if mobile_status:
+            GPIO.output(23, GPIO.LOW) #relay On
             lumens = int(readLight())
             print "light sensor: " + str(lumens)
             if (lumens < 2) :
                 print "On"
+                time.sleep(4)
                 controller.send(light.fade_up(milight_group))
+                GPIO.output(23, GPIO.HIGH) #relay Off
                 light.wait(0)
                 last_mobile_status = mobile_status
         else:

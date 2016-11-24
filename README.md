@@ -12,7 +12,7 @@ echo i2c-dev >> /etc/modules
 modprobe i2c-dev
 
 easy_install pip
-pip install tornado w1thermsensor pyping milight
+pip install tornado w1thermsensor pyping milight RPi.GPIO
 
 git clone https://github.com/masterzion/weatherstation.git
 cd weatherstation
