@@ -143,3 +143,13 @@ div.thermometers .last-update {
     height: 300px;
     float: left;
 }
+
+
+#linkdiv {
+    width: 100%;
+    height: 300px;
+    float: left;
+    margin-top : 40px;
+    text-align: center;
+}
+

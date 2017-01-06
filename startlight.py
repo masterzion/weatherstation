@@ -9,10 +9,13 @@ except RuntimeError:
 import pyping, sys, milight, time, smbus
 
 
+gpioID = 23
+
+
 #set relay config
 GPIO.setwarnings(False)
 GPIO.setmode(GPIO.BCM)
-GPIO.setup(23, GPIO.OUT)
+GPIO.setup(gpioID, GPIO.OUT)
 
 
 
@@ -53,7 +56,6 @@ def readLight(addr=DEVICE):
 print mobile_ip + " " +  milight_ip + " " + str(milight_port) + " " + str(milight_group)
 controller = milight.MiLight({'host': milight_ip, 'port': milight_port}, wait_duration=0)
 light = milight.LightBulb(['rgbw']) # Can specify which types of bulbs to use
-
 last_mobile_status = True
 
 # main loop
@@ -61,7 +63,7 @@ while True:
     # check if the mobile is out of the network 3 times
     count=0
     while True:
-        if count > 20:
+        if count > 80:
             break
         r = pyping.ping(mobile_ip)
         mobile_status = (r.ret_code == 0)
@@ -70,12 +72,12 @@ while True:
             break
         else:
             count += 1
-            time.sleep(5)
+            time.sleep(1)
 
 
     if mobile_status != last_mobile_status:
         if mobile_status:
-            GPIO.output(23, GPIO.LOW) #relay On
+            GPIO.output(gpioID, GPIO.LOW) #relay On
             lumens = int(readLight())
             print "light sensor: " + str(lumens)
             if (lumens < 2) :
@@ -85,9 +87,11 @@ while True:
                 light.wait(0)
                 last_mobile_status = mobile_status
         else:
-          controller.send(light.fade_down(milight_group))
+          #controller.send(light.fade_down(milight_group))
+          #controller.send(light.off(1)) # Turn off group 1 lights
+          controller.send(light.all_off()) # Turn off all lights, equivalent to light.off(0)
           print "set Off"
-          GPIO.output(23, GPIO.HIGH) #relay Off
+          GPIO.output(gpioID, GPIO.HIGH) #relay Off
           last_mobile_status = mobile_status
 
     time.sleep(2)

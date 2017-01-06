@@ -43,6 +43,7 @@ function drawCurveTypes() {
           },
           vAxis: {
             title: 'Temperature',
+            format:'##.##',
           },
         };
 
